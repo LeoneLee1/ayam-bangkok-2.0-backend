@@ -34,6 +34,9 @@ func main() {
 	// Static File GLOBAL
 	r.Static("/storage", "./storage")
 
+	// Auth Routes
+	services.AuthRoutes(r, dbConn)
+
 	// Run Server
 	logger.Info().Msg("Server running on port 8080")
 	if err := r.Run(":8080"); err != nil {

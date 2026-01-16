@@ -23,3 +23,7 @@ type AbsenceModel struct {
 
 	User *UserModel `gorm:"foreignKey:UserID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"user,omitempty"`
 }
+
+func (AbsenceModel) TableName() string {
+	return "absences"
+}

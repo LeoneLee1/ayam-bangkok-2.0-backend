@@ -30,6 +30,9 @@ func main() {
 
 	// HealthCheck /health
 	services.HealthCheck(r, dbConn)
+	
+	// Static File GLOBAL
+	r.Static("/storage", "./storage")
 
 	// Run Server
 	logger.Info().Msg("Server running on port 8080")

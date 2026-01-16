@@ -1,6 +1,7 @@
 package main
 
 import (
+	"ayam_bangkok/source/common/models"
 	"ayam_bangkok/source/config"
 	"ayam_bangkok/source/pkg/db"
 	"ayam_bangkok/source/pkg/logger"
@@ -18,7 +19,11 @@ func main() {
 	logger.Log.Info().Msg("Running database migration...")
 
 	if err := dbConn.AutoMigrate(
-		// Models here
+		&models.UserModel{},
+		&models.AbsenceModel{},
+		&models.MenuModel{},
+		&models.RoomModel{},
+		&models.FeedbackModel{},
 	); err != nil {
 		logger.Log.Fatal().Msg("Migration failed")
 	}

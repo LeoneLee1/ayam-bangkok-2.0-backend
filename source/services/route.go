@@ -2,6 +2,7 @@ package services
 
 import (
 	"ayam_bangkok/source/common/health"
+	"ayam_bangkok/source/features/auth/login"
 	"ayam_bangkok/source/features/auth/register"
 
 	"github.com/gin-gonic/gin"
@@ -18,5 +19,6 @@ func AuthRoutes(r *gin.Engine, db *gorm.DB) {
 	
 	{
 		api.POST("/register", register.NewHandler(db))
+		api.POST("/login", login.NewHandler(db))
 	}
 }

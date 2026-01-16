@@ -6,7 +6,8 @@ type RefreshTokenModel struct {
 	ID           uint64 `gorm:"primaryKey;" json:"id"`
 	UserID       uint64 `gorm:"index" json:"user_id"`
 	RefreshToken string `gorm:"type:varchar(255);uniqueIndex" json:"refresh_token"`
-	ExpiresAt    time.Time `gorm:"index" json:"expires_at"`
+	ExpiredAt    time.Time `gorm:"index" json:"expired_at"`
+	Revoked bool `gorm:"default:false"`
 
 	CreatedAt time.Time      `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt time.Time      `gorm:"autoUpdateTime" json:"updated_at"`

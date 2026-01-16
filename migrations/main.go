@@ -20,6 +20,7 @@ func main() {
 
 	if err := dbConn.AutoMigrate(
 		&models.UserModel{},
+		&models.RefreshTokenModel{},
 		&models.AbsenceModel{},
 		&models.MenuModel{},
 		&models.RoomModel{},

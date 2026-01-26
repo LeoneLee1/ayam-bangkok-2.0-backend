@@ -10,6 +10,7 @@ import (
 	"ayam_bangkok/source/features/auth/register"
 	updatepassword "ayam_bangkok/source/features/auth/update_password"
 	updateprofile "ayam_bangkok/source/features/auth/update_profile"
+	menucreate "ayam_bangkok/source/features/menu/menu_create"
 	"ayam_bangkok/source/services/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -41,13 +42,18 @@ func (r *Routers) MountRouters(routeGroup *gin.RouterGroup) {
 	}
 
 	// absence routes
-	absenceRoute := routeGroup.Group("/absence")
-	absenceRouteAuth := absenceRoute.Use(middleware.AuthMiddleware())
-	absenceRouteAdmin := absenceRouteAuth.Use(middleware.AdminMiddleware())
+	absenceRoute := routeGroup.Group("/absence").Use(middleware.AuthMiddleware())
+	absenceRouteAdmin := absenceRoute.Use(middleware.AdminMiddleware())
 	{
-		absenceRouteAuth.POST("", absenceclockinandout.NewHandler(r.db))
-		absenceRouteAuth.GET("/detail", absenceget.NewHandler(r.db))
+		absenceRoute.POST("", absenceclockinandout.NewHandler(r.db))
+		absenceRoute.GET("/detail", absenceget.NewHandler(r.db))
 		absenceRouteAdmin.GET("/filter", absencegetbyfilter.NewHandler(r.db))
 		absenceRouteAdmin.GET("/export", absenceexportexcel.NewHandler(r.db))
+	}
+
+	// menu routes
+	menuRoute := routeGroup.Group("/menu").Use(middleware.AuthMiddleware(), middleware.AdminMiddleware())
+	{
+		menuRoute.POST("/create", menucreate.NewHandler(r.db))
 	}
 }

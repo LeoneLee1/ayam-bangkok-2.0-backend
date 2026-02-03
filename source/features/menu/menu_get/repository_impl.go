@@ -6,13 +6,21 @@ import (
 )
 
 // getMenu implements Repository.
-func (r *repositoryImpl) getMenu(ctx context.Context, page, limit, offset int) ([]models.MenuModel, int64, error) {
+func (r *repositoryImpl) getMenu(ctx context.Context, day *string, week *int, page, limit, offset int) ([]models.MenuModel, int64, error) {
 	var (
 		menu []models.MenuModel
 		totalRows int64
 	)
 
 	query := r.db.WithContext(ctx).Model(&models.MenuModel{})
+
+	if day != nil && *day != "" {
+		query = query.Where("day = ?", *day)
+	}
+
+	if week != nil && *week > 0 {
+		query = query.Where("week = ?", *week)
+	}
 
 	if err := query.Count(&totalRows).Error; err != nil {
 		return nil, 0, err

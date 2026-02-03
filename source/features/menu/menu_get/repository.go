@@ -8,7 +8,7 @@ import (
 )
 
 type Repository interface {
-	getMenu(ctx context.Context, page, limit, offset int) ([]models.MenuModel, int64, error)
+	getMenu(ctx context.Context, day *string, week *int, page, limit, offset int) ([]models.MenuModel, int64, error)
 }
 
 type repositoryImpl struct {

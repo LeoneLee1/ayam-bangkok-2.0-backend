@@ -6,7 +6,7 @@ import (
 )
 
 type Usecase interface {
-	getMenu(ctx context.Context, page, limit int) ([]models.MenuModel, int64, error)
+	getMenu(ctx context.Context, day *string, week *int, page, limit int) ([]models.MenuModel, int64, error)
 }
 
 type usecaseImpl struct {

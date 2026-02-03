@@ -13,6 +13,8 @@ func (h *Handler) Impl(c *gin.Context) {
 
 	pageStr := c.DefaultQuery("page", "1")
 	limitStr := c.DefaultQuery("limit", "10")
+	day := c.Query("day")
+	weekStr := c.Query("week")
 
 	page, err := strconv.Atoi(pageStr)
 	if err != nil || page < 1 {
@@ -24,7 +26,20 @@ func (h *Handler) Impl(c *gin.Context) {
 		limit = 10
 	}
 
-	menu, totalRows, err := h.usecase.getMenu(ctx, page, limit)
+	var dayPtr *string
+	if day != "" {
+		dayPtr = &day
+	}
+
+	var weekPtr *int
+	if weekStr != "" {
+		w, err := strconv.Atoi(weekStr)
+		if err == nil && w > 0 {
+			weekPtr = &w
+		}
+	}
+
+	menu, totalRows, err := h.usecase.getMenu(ctx, dayPtr, weekPtr, page, limit)
 	if err != nil {
 		errMSG := "Failed to get menu: " + err.Error()
 		httpresputils.HttpRespBadRequest(c, &errMSG)

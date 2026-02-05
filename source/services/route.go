@@ -16,6 +16,7 @@ import (
 	menugetbyid "ayam_bangkok/source/features/menu/menu_get_by_id"
 	menuupdate "ayam_bangkok/source/features/menu/menu_update"
 	ordergetmenu "ayam_bangkok/source/features/order/order_get_menu"
+	ordermenustatus "ayam_bangkok/source/features/order/order_menu_status"
 	"ayam_bangkok/source/services/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -66,9 +67,11 @@ func (r *Routers) MountRouters(routeGroup *gin.RouterGroup) {
 		menuRoute.DELETE("/delete/:menu_id", menudelete.NewHandler(r.db))
 	}
 
+	// order menu routes
 	orderMenuRoute := routeGroup.Group("/order-menu")
 	orderMenuRoute.Use(middleware.AuthMiddleware())
 	{
 		orderMenuRoute.GET("", ordergetmenu.NewHandler(r.db))
+		orderMenuRoute.GET("/status/:menu_id", ordermenustatus.NewHandler(r.db))
 	}
 }

@@ -23,6 +23,7 @@ func main() {
 		&models.RefreshTokenModel{},
 		&models.AbsenceModel{},
 		&models.MenuModel{},
+		&models.OrderMenuModel{},
 	); err != nil {
 		logger.Log.Fatal().Msg("Migration failed")
 	}

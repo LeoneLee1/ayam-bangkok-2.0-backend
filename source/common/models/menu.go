@@ -25,6 +25,8 @@ type MenuModel struct {
 	CreatedAt time.Time      `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt time.Time      `gorm:"autoUpdateTime" json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
+
+	OrderMenu []OrderMenuModel  `gorm:"foreignKey:MenuID;references:ID" json:"order_menus,omitempty"`
 }
 
 func (MenuModel) TableName() string {

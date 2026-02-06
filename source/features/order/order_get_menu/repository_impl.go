@@ -16,7 +16,6 @@ func (r *repositoryImpl) getMenuByWeekAndDays(ctx context.Context, week int, day
 	err := r.db.WithContext(ctx).
 		Where("week = ?", week).
 		Where("day IN ?", days).
-		Order("day ASC").
 		Find(&menu).Error
 
 	return menu, err

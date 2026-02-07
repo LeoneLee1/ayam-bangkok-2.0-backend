@@ -19,6 +19,11 @@ import (
 	ordermenu "ayam_bangkok/source/features/order/order_menu"
 	ordermenucancel "ayam_bangkok/source/features/order/order_menu_cancel"
 	ordermenustatus "ayam_bangkok/source/features/order/order_menu_status"
+	roomcreate "ayam_bangkok/source/features/room/room_create"
+	roomdelete "ayam_bangkok/source/features/room/room_delete"
+	roomget "ayam_bangkok/source/features/room/room_get"
+	roomgetbyid "ayam_bangkok/source/features/room/room_get_by_id"
+	roomupdate "ayam_bangkok/source/features/room/room_update"
 	"ayam_bangkok/source/services/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -77,5 +82,16 @@ func (r *Routers) MountRouters(routeGroup *gin.RouterGroup) {
 		orderMenuRoute.GET("/status/:menu_id", ordermenustatus.NewHandler(r.db))
 		orderMenuRoute.POST("/create/:menu_id", ordermenu.NewHandler(r.db))
 		orderMenuRoute.DELETE("/cancel/:menu_id", ordermenucancel.NewHandler(r.db))
+	}
+
+	// room routes
+	roomRoute := routeGroup.Group("/room")
+	roomRoute.Use(middleware.AuthMiddleware(), middleware.AdminMiddleware())
+	{
+		roomRoute.POST("/create", roomcreate.NewHandler(r.db))
+		roomRoute.GET("", roomget.NewHandler(r.db))
+		roomRoute.GET("/detail/:room_id", roomgetbyid.NewHandler(r.db))
+		roomRoute.PUT("/update/:room_id", roomupdate.NewHandler(r.db))
+		roomRoute.DELETE("/delete/:room_id", roomdelete.NewHandler(r.db))
 	}
 }

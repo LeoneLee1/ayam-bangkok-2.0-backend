@@ -29,6 +29,7 @@ type UserModel struct {
 	Absences []AbsenceModel  `gorm:"foreignKey:UserID;references:ID" json:"absences,omitempty"`
 	Feedback []FeedbackModel `gorm:"foreignKey:UserID;references:ID" json:"feedbacks,omitempty"`
 	OrderMenu []OrderMenuModel  `gorm:"foreignKey:UserID;references:ID" json:"order_menus,omitempty"`
+	BookingRoom []BookingRoomModel `gorm:"foreignKey:UserID;references:ID" json:"booking_room,omitempty"`
 }
 
 func (UserModel) TableName() string {

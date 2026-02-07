@@ -9,7 +9,7 @@ import (
 
 type Repository interface {
 	getCapacityRoom(ctx context.Context, roomID uint64) (int, error)
-	checkBookingRoom(ctx context.Context, userID, roomID uint64, date, start, end string) (bool, error)
+	checkBookingRoom(ctx context.Context, roomID uint64, date, start, end string) (bool, error)
 	bookingRoom(ctx context.Context, bookingRoom *models.BookingRoomModel) error
 }
 

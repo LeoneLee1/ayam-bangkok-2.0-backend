@@ -34,17 +34,17 @@ func (h *Handler) Impl(c *gin.Context) {
 		return
 	}
 
-	if err := h.usecase.bookingRoom(ctx, uint64(userClaim.ID), uint64(roomID), userClaim.Nik, request); err != nil {
-		
-		if errors.Is(err, ErrRoomAlreadyBooked) {
-			errMSG := "Room already booked in this time range"
-			httpresputils.HttpRespBadRequest(c, &errMSG)
-			return
+	if err := h.usecase.bookingRoom(ctx, uint64(userClaim.ID), uint64(roomID), userClaim.Name, request); err != nil {
+		switch {
+			case errors.Is(err, ErrRoomAlreadyBooked):
+				errMSG := "Room already booked in this time range"
+				httpresputils.HttpRespBadRequest(c, &errMSG)
+				return
+			default:
+				errMSG := err.Error()
+				httpresputils.HttpRespBadRequest(c, &errMSG)
+				return
 		}
-
-		errMSG := err.Error()
-		httpresputils.HttpRespBadRequest(c, &errMSG)
-		return
 	}
 
 	httpresputils.HttpRespCreated(c, nil, nil)

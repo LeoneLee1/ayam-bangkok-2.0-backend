@@ -11,7 +11,7 @@ func (r *repositoryImpl) orderMenuStatus(ctx context.Context, userID, menuID uin
 	err := r.db.WithContext(ctx).
 		Table("order_menus").
 		Select("id").
-		Where("user_id = ? AND menu_id = ?", userID, menuID).
+		Where("user_id = ? AND menu_id = ? AND deleted_at IS NULL", userID, menuID).
 		Take(&result).Error
 
 	if err != nil {

@@ -17,6 +17,7 @@ import (
 	menuupdate "ayam_bangkok/source/features/menu/menu_update"
 	ordergetmenu "ayam_bangkok/source/features/order/order_get_menu"
 	ordermenu "ayam_bangkok/source/features/order/order_menu"
+	ordermenucancel "ayam_bangkok/source/features/order/order_menu_cancel"
 	ordermenustatus "ayam_bangkok/source/features/order/order_menu_status"
 	"ayam_bangkok/source/services/middleware"
 
@@ -75,5 +76,6 @@ func (r *Routers) MountRouters(routeGroup *gin.RouterGroup) {
 		orderMenuRoute.GET("", ordergetmenu.NewHandler(r.db))
 		orderMenuRoute.GET("/status/:menu_id", ordermenustatus.NewHandler(r.db))
 		orderMenuRoute.POST("/create/:menu_id", ordermenu.NewHandler(r.db))
+		orderMenuRoute.DELETE("/cancel/:menu_id", ordermenucancel.NewHandler(r.db))
 	}
 }

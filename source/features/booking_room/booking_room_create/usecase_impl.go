@@ -29,7 +29,7 @@ func (u *usecaseImpl) bookingRoom(ctx context.Context, userID, roomID uint64, na
 		return fmt.Errorf("Invalid date format: %w", err)
 	}
 
-	checkBooked, err := u.repo.checkBookingRoom(ctx, userID, roomID, request.Date, request.Start, request.End)
+	checkBooked, err := u.repo.checkBookingRoom(ctx, roomID, request.Date, request.Start, request.End)
 	if err != nil {
 		logger.Error().Err(err).Msg("Failed check booking room")
 		return err

@@ -20,14 +20,14 @@ func (r *repositoryImpl) getCapacityRoom(ctx context.Context, roomID uint64) (in
 }
 
 // checkBookingRoom implements Repository.
-func (r *repositoryImpl) checkBookingRoom(ctx context.Context, userID, roomID uint64, date, start, end string) (bool, error) {
+func (r *repositoryImpl) checkBookingRoom(ctx context.Context, roomID uint64, date, start, end string) (bool, error) {
 	var result struct{ID uint64}
 
 	err := r.db.WithContext(ctx).
 		Table("booking_rooms").
 		Select("id").
-		Where("user_id = ? AND room_id = ? AND date = ? AND deleted_at IS NULL AND (start < ? AND end > ?)", 
-			userID, roomID, date, end, start,
+		Where("room_id = ? AND date = ? AND deleted_at IS NULL AND (start < ? AND end > ?)", 
+			roomID, date, end, start,
 		).
 		Take(&result).Error
 

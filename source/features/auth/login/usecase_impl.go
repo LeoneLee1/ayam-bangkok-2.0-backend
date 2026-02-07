@@ -23,7 +23,7 @@ func (u *usecaseImpl) login(ctx context.Context, request body.LoginRequest) (str
 		return "", "", err
 	}
 
-	accessToken, err := jwtutils.CreateAccessToken(uint(user.ID), user.Nik, string(user.Role))
+	accessToken, err := jwtutils.CreateAccessToken(uint(user.ID), user.Name, user.Nik, string(user.Role))
 	if err != nil {
 		return "", "", err
 	}

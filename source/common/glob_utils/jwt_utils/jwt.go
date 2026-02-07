@@ -20,17 +20,19 @@ func GetSecretKey() []byte {
 
 type JWTClaim struct {
 	ID uint `json:"id"`
+	Name string `json:"name"`
 	Nik string `json:"nik"`
 	Role  string `json:"role"`
 	Type string `json:"type"`
 	jwt.RegisteredClaims
 }
 
-func CreateAccessToken(ID uint, Nik string, Role string) (string, error) {
+func CreateAccessToken(ID uint, Name string, Nik string, Role string) (string, error) {
 	expirationTime := time.Now().Add(24 * time.Hour)
 
 	claims := &JWTClaim{
 		ID:     ID,
+		Name: Name,
 		Nik: 	Nik,
 		Role:   Role,
 		Type: 	"access",
@@ -85,12 +87,26 @@ func VerifyToken(tokenString string) (*JWTClaim, error) {
 	return claims, nil
 }
 
-func GetCurrentUserID(c *gin.Context) (uint, bool) {
-	userIDValue, exists := c.Get("id")
+func GetCurrentUser(c *gin.Context) (*JWTClaim, bool) {
+	userValue, exists := c.Get("user")
 	if !exists {
+		return nil, false
+	}
+
+	user, ok := userValue.(*JWTClaim)
+	if !ok {
+		return nil, false
+	}
+
+	return user, true
+
+}
+
+func GetCurrentUserID(c *gin.Context) (uint, bool) {
+	user, ok := GetCurrentUser(c)
+	if !ok {
 		return 0, false
 	}
 
-	userID, ok := userIDValue.(uint)
-	return userID, ok
+	return user.ID, true
 }

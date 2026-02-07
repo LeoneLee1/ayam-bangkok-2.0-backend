@@ -20,7 +20,7 @@ type MenuModel struct {
 	ID   uint64 `gorm:"primaryKey;" json:"id"`
 	Name string `gorm:"type:varchar(255)" json:"name"`
 	Day  Days `gorm:"type:varchar(20)" json:"day"`
-	Week int    `json:"week"`
+	Week int    `gorm:"index" json:"week"`
 
 	CreatedAt time.Time      `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt time.Time      `gorm:"autoUpdateTime" json:"updated_at"`

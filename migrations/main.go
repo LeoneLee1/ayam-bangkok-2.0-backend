@@ -25,6 +25,7 @@ func main() {
 		&models.MenuModel{},
 		&models.OrderMenuModel{},
 		&models.RoomModel{},
+		&models.BookingRoomModel{},
 	); err != nil {
 		logger.Log.Fatal().Msg("Migration failed")
 	}
@@ -33,6 +34,12 @@ func main() {
 		ALTER TABLE absences
 		MODIFY clock_in TIME,
 		MODIFY clock_out TIME NULL;
+	`)
+
+	dbConn.Exec(`
+		ALTER TABLE booking_rooms
+		MODIFY start TIME,
+		MODIFY end TIME;
 	`)
 
 	logger.Log.Info().Msg("Migration success")

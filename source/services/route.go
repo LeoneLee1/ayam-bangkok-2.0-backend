@@ -11,6 +11,7 @@ import (
 	updatepassword "ayam_bangkok/source/features/auth/update_password"
 	updateprofile "ayam_bangkok/source/features/auth/update_profile"
 	bookingroomcreate "ayam_bangkok/source/features/booking_room/booking_room_create"
+	bookingroomlist "ayam_bangkok/source/features/booking_room/booking_room_list"
 	bookingroomstatus "ayam_bangkok/source/features/booking_room/booking_room_status"
 	menucreate "ayam_bangkok/source/features/menu/menu_create"
 	menudelete "ayam_bangkok/source/features/menu/menu_delete"
@@ -102,5 +103,6 @@ func (r *Routers) MountRouters(routeGroup *gin.RouterGroup) {
 	{
 		bookingRoomRoute.POST("/create/:room_id", bookingroomcreate.NewHandler(r.db))
 		bookingRoomRoute.GET("/status/:room_id", bookingroomstatus.NewHandler(r.db))
+		bookingRoomRoute.GET("/list/:room_id", bookingroomlist.NewHandler(r.db))
 	}
 }

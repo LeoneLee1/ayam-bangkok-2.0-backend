@@ -11,7 +11,7 @@ type BookingRoomModel struct {
 	UserID uint64 `gorm:"index" json:"user_id"`
 	RoomID uint64 `gorm:"index" json:"room_id"`
 
-	Name string `gorm:"type:varchar(255)" json:"name"`
+	Name string `gorm:"type:varchar(255);index" json:"name"`
 	TotalParticipants int `json:"total_participants"`
 	Date time.Time `gorm:"type:date;index" json:"date"`
 	Start string `gorm:"type:time;index" json:"start"`

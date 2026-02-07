@@ -24,7 +24,15 @@ func (h *Handler) Impl(c *gin.Context) {
 		return
 	}
 
+	var msg string
+
+	if status == true {
+		msg = "Room is used"
+	} else {
+		msg = "Room is available"
+	}
+
 	httpresputils.HttpRespOK(c, gin.H{
-		"status": status,
+		"status": msg,
 	}, nil, nil)
 }

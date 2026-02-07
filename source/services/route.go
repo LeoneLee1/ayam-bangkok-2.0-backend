@@ -10,6 +10,7 @@ import (
 	"ayam_bangkok/source/features/auth/register"
 	updatepassword "ayam_bangkok/source/features/auth/update_password"
 	updateprofile "ayam_bangkok/source/features/auth/update_profile"
+	bookingroomcreate "ayam_bangkok/source/features/booking_room/booking_room_create"
 	menucreate "ayam_bangkok/source/features/menu/menu_create"
 	menudelete "ayam_bangkok/source/features/menu/menu_delete"
 	menuget "ayam_bangkok/source/features/menu/menu_get"
@@ -93,5 +94,11 @@ func (r *Routers) MountRouters(routeGroup *gin.RouterGroup) {
 		roomRoute.GET("/detail/:room_id", roomgetbyid.NewHandler(r.db))
 		roomRoute.PUT("/update/:room_id", roomupdate.NewHandler(r.db))
 		roomRoute.DELETE("/delete/:room_id", roomdelete.NewHandler(r.db))
+	}
+
+	bookingRoomRoute := routeGroup.Group("/booking-rooms")
+	bookingRoomRoute.Use(middleware.AuthMiddleware())
+	{
+		bookingRoomRoute.POST("/create/:room_id", bookingroomcreate.NewHandler(r.db))
 	}
 }

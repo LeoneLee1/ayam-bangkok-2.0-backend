@@ -24,6 +24,7 @@ func main() {
 		&models.AbsenceModel{},
 		&models.MenuModel{},
 		&models.OrderMenuModel{},
+		&models.RoomModel{},
 	); err != nil {
 		logger.Log.Fatal().Msg("Migration failed")
 	}
